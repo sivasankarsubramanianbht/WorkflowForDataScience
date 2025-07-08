@@ -1,0 +1,12 @@
+.env
+.conda
+.venv
+.pycache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.pkl.gz
+*.ipynb_checkpoints
+*.log

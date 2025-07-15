@@ -31,7 +31,7 @@ eda_plots_dir = os.path.join(base_dir, "plots/eda")
 model_eval_plots_dir = os.path.join(base_dir, "plots/model_evaluation")
 models_dir = os.path.join(base_dir, "models")
 model_params_dir = os.path.join(base_dir, "model_params")
-
+explainability_plots_dir = os.path.join(base_dir, "plots/explainability")
 
 # --- Helper functions to load and display content ---
 
@@ -163,7 +163,7 @@ def get_modeling_and_evaluation_results():
     results_md += "- **F1-Score:** Harmonic mean of precision and recall.\n"
     results_md += "- **ROC AUC:** Area Under the Receiver Operating Characteristic Curve, indicating the model's ability to distinguish between classes.\n\n"
 
-    metrics_table_path = os.path.join(model_eval_plots_dir, "classification_model_metrics_table.csv")
+    metrics_table_path = os.path.join(model_eval_plots_dir, "model_evaluation_summary.csv")
     metrics_display = ""
     if os.path.exists(metrics_table_path):
         try:
@@ -180,71 +180,89 @@ def get_modeling_and_evaluation_results():
     plot_files = []
     # List all evaluation plots generated in your pipeline's Step 7
     eval_plots = [
-      "Logistic_Regression_Test_ROC_Curve.png",
-      "Logistic_Regression_Test_Confusion_Matrix.png",
-      "Neural_Network_Classification_Test_ROC_Curve.png",
-      "Neural_Network_Classification_Test_Confusion_Matrix.png"
+      "logistic_regression_model_confusion_matrix_test.png",
+      "logistic_regression_model_roc_curve_test.png",
+      "neural_network_classification_model_confusion_matrix_test.png",
+      "neural_network_classification_model_roc_curve_test.png"
       ]
 
     found_plots_info = "### **Model Evaluation Plots (Test Set):**\n\n"
+    temp_plot_info = "" # Use a temporary string for plot info before adding to results_md
 
     for plot in eval_plots:
         path = os.path.join(model_eval_plots_dir, plot)
         if os.path.exists(path):
             plot_files.append(path)
-            found_plots_info += f"- **{plot.replace('.png', '').replace('_', ' ').title()}**\n"
-            if "ROC_Curve" in plot:
-                found_plots_info += "  *Inference:* Visualizes the trade-off between the true positive rate and false positive rate. A curve closer to the top-left corner indicates better performance.\n"
-            elif "Confusion_Matrix" in plot:
-                found_plots_info += "  *Inference:* Shows the counts of true positives, true negatives, false positives, and false negatives, providing a clear picture of classification errors.\n"
-            found_plots_info += "\n"
+            temp_plot_info += f"- **{plot.replace('.png', '').replace('_', ' ').title()}**\n"
+            if "roc_curve" in plot.lower(): # Case-insensitive check
+                temp_plot_info += "    *Inference:* Visualizes the trade-off between the true positive rate and false positive rate. A curve closer to the top-left corner indicates better performance.\n"
+            elif "confusion_matrix" in plot.lower(): # Case-insensitive check
+                temp_plot_info += "    *Inference:* Shows the counts of true positives, true negatives, false positives, and false negatives, providing a clear picture of classification errors.\n"
+            temp_plot_info += "\n"
         else:
             logger.warning(f"Model evaluation plot not found: {path}")
 
     if not plot_files:
-        found_plots_info = "No model evaluation plots found. Please ensure the pipeline has generated them."
+        temp_plot_info = "No model evaluation plots found. Please ensure the pipeline has generated them."
 
-    return results_md, found_plots_info, plot_files
+    # Combine all markdown into a single output string
+    full_markdown_output = results_md + temp_plot_info
+
+    return full_markdown_output, plot_files
+
+def get_model_explainability_info():
+    """Provides general information about Model Explainability."""
+    explain_md = "### **4. Model Explainability**\n\n"
+    explain_md += "Understanding why a model makes certain predictions is crucial, especially in high-stakes domains like aviation.\n"
+    explain_md += "This section utilizes **SHAP (SHapley Additive exPlanations)** to interpret model predictions by showing the contribution of each feature to the prediction.\n\n"
+    explain_md += "*(Future enhancement: Interactive SHAP/LIME plots, feature importance rankings, and example predictions with explanations.)*\n"
+    return explain_md
 
 def get_shap_plots():
-    """Returns a list of paths to SHAP explanation plots."""
-    shap_plots_dir = os.path.join(base_dir, "plots/model_explainability") # Ensure this path is defined globally or passed
+    """Returns a combined markdown string for SHAP plot info and a list of paths to SHAP explanation plots."""
+    # Ensure this path matches where your main.py saves explainability plots
+    # For example: plots/explainability/
+    shap_plots_dir = explainability_plots_dir
     os.makedirs(shap_plots_dir, exist_ok=True) # Ensure dir exists for the app too
 
     plot_files = []
-    shap_plots = [
-        "logistic_regression_shap_summary.png",
-        "neural_network_shap_summary.png",
-        # Add other SHAP plots if you generate them (e.g., dependence plots)
+    # List all explainability plots generated by your pipeline's _step_model_explainability
+    shap_plots_to_check = [
+        "logistic_regression_model_shap_summary_plot_dot.png",
+        "logistic_regression_model_coefficient_importance.png", # Corrected NN filename
+        'logistic_regression_model_shap_summary_plot.png',
+        # Add SHAP dependence plots here if you want to display them in the gallery
+        # Example dependence plots (ensure these are generated by main.py)
     ]
 
-    found_plots_info = "### **4.1 SHAP Feature Importance Plots**\n\n"
-    found_plots_info += "These plots show the contribution of each feature to the model's predictions.\n\n"
+    # Combine general info with specific plot info
+    full_shap_markdown = "### **4.1 SHAP Feature Importance Plots**\n\n"
+    full_shap_markdown += "These plots show the contribution of each feature to the model's predictions.\n\n"
+    
+    # Placeholder for plot-specific info that will be dynamically generated
+    plot_specific_info = ""
 
-    for plot in shap_plots:
-        path = os.path.join(shap_plots_dir, plot)
+    for plot_filename in shap_plots_to_check:
+        path = os.path.join(shap_plots_dir, plot_filename)
         if os.path.exists(path):
             plot_files.append(path)
-            found_plots_info += f"- **{plot.replace('.png', '').replace('_', ' ').title()}**\n"
-            found_plots_info += "  *Inference:* Each point represents an instance in the dataset. The position on the x-axis shows the SHAP value, indicating the feature's impact on the prediction. Color often indicates the feature's actual value (e.g., high or low).\n\n"
+            plot_specific_info += f"- **{plot_filename.replace('.png', '').replace('_', ' ').title()}**\n"
+            if "shap_summary" in plot_filename.lower():
+                plot_specific_info += "    *Inference:* Each point represents an instance in the dataset. The position on the x-axis shows the SHAP value, indicating the feature's impact on the prediction. Color often indicates the feature's actual value (e.g., high or low).\n\n"
+            elif "coefficient_importance" in plot_filename.lower():
+                 plot_specific_info += "    *Inference:* For linear models, this plot displays the magnitude and direction (positive/negative) of feature coefficients, indicating their direct impact on the prediction.\n\n"
+            elif "shap_dependence_plot" in plot_filename.lower():
+                plot_specific_info += "    *Inference:* Shows the relationship between a feature's value and its impact on the model's output (SHAP value), often revealing interactions with another feature (color).\n\n"
         else:
             logger.warning(f"SHAP plot not found: {path}")
 
     if not plot_files:
-        return "No SHAP plots found. Please ensure the pipeline has generated them in `plots/model_explainability`.", []
+        plot_specific_info = "No SHAP or explainability plots found. Please ensure the pipeline has generated them in `plots/explainability`."
 
-    return found_plots_info, plot_files
+    # Combine the initial overview with the dynamically generated plot-specific info
+    full_shap_markdown += plot_specific_info
 
-def get_model_explainability_info():
-    """Placeholder for Model Explainability."""
-    explain_md = "### **4. Model Explainability**\n\n"
-    explain_md += "Understanding why a model makes certain predictions is crucial, especially in high-stakes domains like aviation.\n"
-    explain_md += "This section will be dedicated to explaining model predictions using techniques such as:\n"
-    explain_md += "- **SHAP (SHapley Additive exPlanations):** To explain individual predictions and global feature importance by showing the contribution of each feature to the prediction.\n"
-    explain_md += "- **LIME (Local Interpretable Model-agnostic Explanations):** To explain the predictions of any machine learning model by approximating it with a local, interpretable model.\n\n"
-    explain_md += "**Current Status:** This functionality is still under development. Once implemented, you will be able to select a model and input features to see how different factors influence the prediction of a flight delay.\n\n"
-    explain_md += "*(Future enhancement: Interactive SHAP/LIME plots, feature importance rankings, and example predictions with explanations.)*"
-    return explain_md
+    return full_shap_markdown, plot_files
 
 
 # --- Gradio Interface ---
@@ -309,23 +327,23 @@ with gr.Blocks(theme=gr.themes.Soft(), title="Flight Delay Prediction ML Pipelin
         model_eval_summary_output = gr.Markdown("Loading model evaluation results...")
         model_eval_plot_gallery = gr.Gallery(
             label="Model Evaluation Plots (Test Set)",
-            columns=[4], rows=[2], object_fit="contain", height="auto"
+            columns=[2], rows=[2], object_fit="contain", height="auto"
         )
         demo.load(get_modeling_and_evaluation_results, inputs=None, outputs=[model_eval_summary_output, model_eval_plot_gallery])
 
     with gr.Tab("3. Model Explainability"):
         gr.Markdown("## Understanding Model Decisions")
         gr.Markdown("---")
-        # explainability_output = gr.Markdown(get_model_explainability_info()) # REMOVE THIS LINE
+        # Display general info statically
+        gr.Markdown(get_model_explainability_info()) 
 
         shap_info_output = gr.Markdown("Loading SHAP plot information...")
         shap_plot_gallery = gr.Gallery(
             label="SHAP Explanations",
             columns=[2], rows=[1], object_fit="contain", height="auto"
         )
+        # The demo.load now correctly maps the two outputs from get_shap_plots
         demo.load(get_shap_plots, inputs=None, outputs=[shap_info_output, shap_plot_gallery])
-        # Optionally, keep the general info above the plots if desired
-        gr.Markdown(get_model_explainability_info())
 
 
 if __name__ == "__main__":
@@ -340,5 +358,5 @@ if __name__ == "__main__":
 
     # You would typically run your main pipeline first to generate outputs
     # For demonstration, we assume your main.py has already run and saved artifacts.
-    logger.info("Starting Gradio App. Ensure your ML pipeline (main.py) has been executed to generate necessary reports and plots.")
+    logger.info("Starting Gradio App. Ensure your ML pipeline (pipeline.py) has been executed to generate necessary reports and plots.")
     demo.launch(share=True) # Set share=True to get a public link for Colab

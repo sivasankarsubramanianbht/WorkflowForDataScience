@@ -35,14 +35,15 @@ R²: 0.96
 
 compared to a naive mean predictor baseline (MAE ≈ 8.50).
 
-## Results## 
+## Results ## 
 
 The model’s training and validation performance was visualized using a learning curve. This helped confirm that the model generalizes well without significant overfitting. The final learning curve is saved in the results/ folder.
 
-##How to run##
+## How to run ##
 
 Run the main.py file under src/ 
 `cd src
+
 python main.py`
 
 #Note: make sure to install the required libraries from requirements.txt file in main branch

@@ -9,6 +9,7 @@ from src.feature_selection import select_top_features
 from src.models.hpo_nn import run_nn_kfold_with_hpo
 from src.models.baseline import compare_all_baselines
 from src.visualization import plot_metric_comparison, plot_actual_vs_predicted, save_comparison_table, write_summary
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -56,6 +57,15 @@ def main():
     plt.legend()
     plt.grid(True)
     plt.savefig("results/learning_curve.png", dpi=300)
+
+    plt.plot(history.history['loss'], label='Train Loss')
+    plt.plot(history.history['val_loss'], label='Validation Loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('MSE Loss')
+    plt.title('Learning Curve: Train vs Validation Loss')
+    plt.legend()
+    plt.grid(True)
+    plt.savefig("results/learning_curve.png", dpi=300) 
 
 if __name__ == '__main__':
     main()

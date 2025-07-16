@@ -14,7 +14,7 @@ def build_nn(input_dim, n_units_1=64, n_units_2=32):
 
 def train_final_model(X_train, y_train, X_val, y_val, input_dim, params):
     model = build_nn(input_dim, params['n_units_1'], params['n_units_2'])
-    ,history = model.fit(
+    history = model.fit(
         X_train, y_train,
         validation_data=(X_val, y_val),
         epochs=params['epochs'],

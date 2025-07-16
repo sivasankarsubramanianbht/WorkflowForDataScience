@@ -25,7 +25,7 @@ def main():
     X_train, X_val, y_train, y_val = train_test_split(X_temp, y_temp, test_size=0.25, random_state=42)  # 0.25 x 0.8 = 0.2
 
     # NN training with k-fold CV and HPO
-    y_pred_val, y_pred_test, best_params, best_val_mae = run_nn_kfold_with_hpo(
+    y_pred_val, y_pred_test, best_params, best_val_mae,history = run_nn_kfold_with_hpo(
         X_train.to_numpy(), y_train.to_numpy(),
         X_val.to_numpy(), X_test.to_numpy(),
         y_val.to_numpy(), y_test.to_numpy()

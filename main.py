@@ -58,15 +58,6 @@ def main():
     plt.grid(True)
     plt.savefig("results/learning_curve.png", dpi=300)
 
-    plt.plot(history.history['loss'], label='Train Loss')
-    plt.plot(history.history['val_loss'], label='Validation Loss')
-    plt.xlabel('Epoch')
-    plt.ylabel('MSE Loss')
-    plt.title('Learning Curve: Train vs Validation Loss')
-    plt.legend()
-    plt.grid(True)
-    plt.savefig("results/learning_curve.png", dpi=300) 
-
 if __name__ == '__main__':
     main()
 

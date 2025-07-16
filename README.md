@@ -13,6 +13,37 @@ Performance benchmarking against a naive baseline (mean-based prediction)
 
 The neural network significantly outperforms the baseline, achieving high predictive accuracy with low error metrics.
 
+## File Structure ##
+
+```
+├── data/
+│   ├── flights_sample_100k.csv    #raw dataset   
+├── notebooks/
+    ├── data-workflow.ipynb
+    ├── eda_preprocessing.ipynb    #EDA, preprocessing
+    ├── output_report.html         #EDA
+├── results/
+    ├── actual_vs_predicted.png
+    ├── learning_curve.png
+    ├── mae_comparison.png
+    ├── model_comparison.csv
+    ├── r²_comparison.png
+    ├── rmse_comparison
+    ├── summary.txt
+├── src/
+    ├── models/
+        ├── baseline.py            #baseline naive mean
+        ├── hpo_nn.py              #hpo
+        ├── neural_net.py          #model training
+    ├── evaluation.py              #evaluation of model
+    ├── feature_selection.py       #top 30 features from preprocessed dataset
+    ├── main.py                    #running ML pipeline
+    ├── preprocessing.py           #preprocessed dataset
+    ├── visualization.py           #visualization from model output
+├── README.md                      #this file
+├── requirements.txt
+```
+
 ## Model Summary ##
 
 The final model is a fully connected neural network with two hidden layers:
@@ -43,7 +74,9 @@ The model’s training and validation performance was visualized using a learnin
 
 Run the main.py file under src/ 
 
-`cd src
-python main.py`
+```
+cd src
+python main.py
+```
 
 #Note: make sure to install the required libraries from requirements.txt file in main branch

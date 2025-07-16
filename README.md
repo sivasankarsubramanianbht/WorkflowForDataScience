@@ -42,8 +42,8 @@ The model’s training and validation performance was visualized using a learnin
 ## How to run ##
 
 Run the main.py file under src/ 
-`cd src
 
+`cd src
 python main.py`
 
 #Note: make sure to install the required libraries from requirements.txt file in main branch

@@ -14,7 +14,7 @@ def build_nn(input_dim, n_units_1=64, n_units_2=32):
 
 def train_final_model(X_train, y_train, X_val, y_val, input_dim, params):
     model = build_nn(input_dim, params['n_units_1'], params['n_units_2'])
-    model.fit(
+    ,history = model.fit(
         X_train, y_train,
         validation_data=(X_val, y_val),
         epochs=params['epochs'],
@@ -22,4 +22,4 @@ def train_final_model(X_train, y_train, X_val, y_val, input_dim, params):
         verbose=0,
         callbacks=[EarlyStopping(monitor='val_mae', patience=3, restore_best_weights=True)]
     )
-    return model
+    return model,history

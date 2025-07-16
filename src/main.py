@@ -1,4 +1,3 @@
-
 # --- main.py ---
 import pandas as pd
 import numpy as np
@@ -48,7 +47,7 @@ def main():
     plot_actual_vs_predicted(y_test, y_pred_test)
     save_comparison_table(df_results)
     write_summary(best_params, mean_absolute_error(y_val, y_pred_val), mean_absolute_error(y_test, y_pred_test))
-    
+
     plt.plot(history.history['loss'], label='Train Loss')
     plt.plot(history.history['val_loss'], label='Validation Loss')
     plt.xlabel('Epoch')
@@ -56,9 +55,8 @@ def main():
     plt.title('Learning Curve: Train vs Validation Loss')
     plt.legend()
     plt.grid(True)
-    plt.savefig("results/learning_curve.png", dpi=300)
+    plt.savefig("results\learning_curve.png", dpi=300)  # Use this in your PowerPoint
+
 
 if __name__ == '__main__':
     main()
-
- 

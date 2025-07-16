@@ -12,10 +12,11 @@ def build_nn(input_dim, n_units_1=64, n_units_2=32):
     model.compile(optimizer='adam', loss='mse', metrics=['mae'])
     return model
 
-def train_final_model(X_train, y_train, input_dim, params):
+def train_final_model(X_train, y_train, X_val, y_val, input_dim, params):
     model = build_nn(input_dim, params['n_units_1'], params['n_units_2'])
     model.fit(
         X_train, y_train,
+        validation_data=(X_val, y_val),
         epochs=params['epochs'],
         batch_size=params['batch_size'],
         verbose=0,

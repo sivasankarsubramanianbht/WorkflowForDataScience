@@ -2,3 +2,23 @@
 venv/
 .venv/
 .env/
+
+#additional files to be ignored
+.env
+.conda
+.venv
+.pycache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.pkl.gz
+*.ipynb_checkpoints
+*.log
+*.joblib
+*.h5
+*.hdf5
+.wandb
+.wandb/*
+.git/

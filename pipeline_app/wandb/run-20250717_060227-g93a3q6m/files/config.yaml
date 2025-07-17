@@ -1,0 +1,94 @@
+_wandb:
+    value:
+        cli_version: 0.21.0
+        code_path: source-flight-delay-prediction-final-pipeline_app_pipeline.py
+        e:
+            tij9lp9h6q9h4jrs6znzwwibw4kccaos:
+                codePath: pipeline_app\pipeline.py
+                codePathLocal: pipeline.py
+                cpu_count: 16
+                cpu_count_logical: 32
+                cudaVersion: "12.6"
+                disk:
+                    /:
+                        total: "262142947328"
+                        used: "3208421376"
+                email: jaikushwaha7@gmail.com
+                executable: D:\BHT\WorkflowForDataScience\pipeline_app\test-venv\Scripts\python.exe
+                git:
+                    commit: eb856afaddfa3481a8e1c112f9ad772626584f82
+                    remote: https://github.com/sivasankarsubramanianbht/WorkflowForDataScience.git
+                gpu: NVIDIA GeForce RTX 4060 Laptop GPU
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ada
+                      cudaCores: 3072
+                      memoryTotal: "8585740288"
+                      name: NVIDIA GeForce RTX 4060 Laptop GPU
+                      uuid: GPU-a21988eb-da44-1fb7-93ff-9b17055c2c36
+                host: JaiAlankrita
+                memory:
+                    total: "16308006912"
+                os: Windows-11-10.0.26100-SP0
+                program: D:\BHT\WorkflowForDataScience\pipeline_app\pipeline.py
+                python: CPython 3.12.11
+                root: D:\BHT\WorkflowForDataScience\pipeline_app
+                startedAt: "2025-07-17T04:02:27.875130Z"
+                writerId: tij9lp9h6q9h4jrs6znzwwibw4kccaos
+        m: []
+        python_version: 3.12.11
+        t:
+            "1":
+                - 2
+                - 3
+                - 5
+                - 49
+                - 53
+                - 105
+            "2":
+                - 2
+                - 3
+                - 5
+                - 49
+                - 53
+                - 105
+            "3":
+                - 2
+                - 13
+                - 16
+            "4": 3.12.11
+            "5": 0.21.0
+            "8":
+                - 3
+            "12": 0.21.0
+            "13": windows-amd64
+arr_delay_threshold_mins:
+    value: 15
+data_sample_file:
+    value: flights_sample_10k.csv
+dataset_name:
+    value: patrickzel/flight-delay-and-cancellation-data-2019-2023-v2
+eda_min_flight_count_airline_delay:
+    value: 500
+eda_top_n_destinations:
+    value: 20
+high_correlation_threshold:
+    value: 0.9
+nn_batch_size:
+    value: 32
+nn_epochs:
+    value: 10
+project_name:
+    value: flight-delay-prediction-final
+random_state:
+    value: 42
+run_name:
+    value: full_pipeline_refactored_v1
+shap_explain_sample_size:
+    value: 1000
+target_column:
+    value: FLIGHT_STATUS
+test_size:
+    value: 0.15
+validation_split_ratio:
+    value: 0.15

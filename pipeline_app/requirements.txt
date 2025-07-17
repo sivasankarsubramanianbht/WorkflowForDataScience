@@ -1,0 +1,19 @@
+pandas
+numpy
+kaggle
+kagglehub
+ydata-profiling>=4.0.0
+matplotlib
+seaborn
+scikit-learn # Make sure scikit-learn is included for OrdinalEncoder, OneHotEncoder
+category_encoders
+gradio
+tensorflow
+joblib
+scikeras
+
+joblib 
+scikeras 
+shap  
+keras-tuner 
+wandb

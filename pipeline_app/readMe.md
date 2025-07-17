@@ -64,22 +64,22 @@ Follow these steps to set up and run the project on your local machine.
 
 ### Prerequisites
 
-* Python 3.8+
+* Python **>3.8+** & **<+ 3.12**
 * `pip` (Python package installer)
-* Kaggle API Key (for data download)
+* Kaggle API Key (alternate:for data download*)
 
 ### Step 1: Clone the Repository
 
 ```bash
-git clone <repository_url>
-cd flight-delay-prediction-ml-pipeline # Replace with your actual repository name
+git clone https://github.com/sivasankarsubramanianbht/WorkflowForDataScience.git
+cd WorkflowForDataScience/pipeline_app # Replace with your actual repository name
 ```
 ### Step 2: Create a Virtual Environment (Recommended)
 It's highly recommended to use a virtual environment to manage project dependencies.
 
 ```Bash
 
-python -m venv venv
+py -3.12 -m venv venv
 # On Windows
 .\venv\Scripts\activate
 # On macOS/Linux
@@ -90,7 +90,7 @@ source venv/bin/activate
 pip install -r pipeline_app/requirements.txt
 ```
 
-### Step 4: Configure Kaggle API
+### Step 4: Configure Kaggle API (Can be skipped)
 To download the dataset, you need to set up your Kaggle API credentials.
 ```
 Go to your Kaggle account page: https://www.kaggle.com/<your-username>/account
@@ -169,7 +169,7 @@ python pipeline.py
     * **WandB**: A link to your WandB run will be printed in the console, where you can explore the experiment results, metrics, and logged artifacts.
 
 * **Option 2**: Launching the Gradio Dashboard
-After running main.py at least once to generate the necessary files, you can launch the Gradio dashboard to interactively explore the results.
+After running pipeline.py at least once to generate the necessary files, you can launch the Gradio dashboard to interactively explore the results.
 
 ```Bash
 

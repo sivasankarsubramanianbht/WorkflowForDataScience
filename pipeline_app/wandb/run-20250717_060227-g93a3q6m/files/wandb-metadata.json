@@ -1,0 +1,40 @@
+{
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "CPython 3.12.11",
+  "startedAt": "2025-07-17T04:02:27.875130Z",
+  "program": "D:\\BHT\\WorkflowForDataScience\\pipeline_app\\pipeline.py",
+  "codePath": "pipeline_app\\pipeline.py",
+  "codePathLocal": "pipeline.py",
+  "git": {
+    "remote": "https://github.com/sivasankarsubramanianbht/WorkflowForDataScience.git",
+    "commit": "eb856afaddfa3481a8e1c112f9ad772626584f82"
+  },
+  "email": "jaikushwaha7@gmail.com",
+  "root": "D:\\BHT\\WorkflowForDataScience\\pipeline_app",
+  "host": "JaiAlankrita",
+  "executable": "D:\\BHT\\WorkflowForDataScience\\pipeline_app\\test-venv\\Scripts\\python.exe",
+  "cpu_count": 16,
+  "cpu_count_logical": 32,
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "262142947328",
+      "used": "3208421376"
+    }
+  },
+  "memory": {
+    "total": "16308006912"
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 4060 Laptop GPU",
+      "memoryTotal": "8585740288",
+      "cudaCores": 3072,
+      "architecture": "Ada",
+      "uuid": "GPU-a21988eb-da44-1fb7-93ff-9b17055c2c36"
+    }
+  ],
+  "cudaVersion": "12.6",
+  "writerId": "tij9lp9h6q9h4jrs6znzwwibw4kccaos"
+}

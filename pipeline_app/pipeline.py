@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
+import kagglehub
 import logging
 import sys
 import importlib
@@ -67,6 +68,17 @@ logger.addHandler(console_handler)
 
 
 class FlightDelayPipeline:
+    def _download_dataset_with_fallback(self):
+        """Tries to download dataset using kagglehub, falls back to DataDownload if needed."""
+        try:
+            path = kagglehub.dataset_download(self.config["dataset_name"])
+            print("Path to dataset files:", path)
+            return path
+        except Exception as e:
+            logger.warning(f"kagglehub download failed: {e}. Falling back to DataDownload.")
+            path = self.downloader.data_download()
+            print("Path to dataset files (fallback):", path)
+            return path
     """
     Orchestrates the entire machine learning pipeline for flight delay prediction,
     from data download to model explainability, with WandB integration.
@@ -197,13 +209,13 @@ class FlightDelayPipeline:
         """Step 1: Downloads data and loads the raw CSV."""
         logger.info("\n--- Step 1: Data Download ---")
         try:
-            self.downloader.data_download()
-            csv_file_path = os.path.join(self.raw_data_dir, self.config["data_sample_file"])
+            path = self._download_dataset_with_fallback()
+            csv_file_path = os.path.join(path, self.config["data_sample_file"])
             df_raw = pd.read_csv(csv_file_path)
             logger.info(f"Raw dataset loaded. Shape: {df_raw.shape}")
             if self.wandb_run:
                 artifact = wandb.Artifact(name="raw-flights-data", type="dataset")
-                artifact.add_dir(self.raw_data_dir)
+                artifact.add_dir(path)
                 self.wandb_run.log_artifact(artifact)
                 logger.info("Raw data artifact logged to WandB.")
             return df_raw

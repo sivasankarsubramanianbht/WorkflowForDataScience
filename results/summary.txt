@@ -4,5 +4,5 @@ Best Neural Network Hyperparameters:
 - batch_size: 32
 - epochs: 30
 
-Validation MAE: 0.911
-Test MAE: 0.920
+Validation MAE: 1.443
+Test MAE: 1.435
